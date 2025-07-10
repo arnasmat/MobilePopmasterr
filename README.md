@@ -49,7 +49,8 @@ Worth noting that the game works better on larger screens (i.e. tablets) as it d
 - [ ] Unit and UI tests (dissapointed that I didn't have time to implement these at the start)
 
 # Showcase
-[![Showcase as a video](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+Showcase as a video
+[![Showcase as a video](https://img.youtube.com/vi/_RwLFxiSUuI/0.jpg)](https://www.youtube.com/watch?v=_RwLFxiSUuI)
 
 
 ## Screenshots
