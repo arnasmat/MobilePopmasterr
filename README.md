@@ -74,7 +74,7 @@ Since this is a learning project I thought I may include a small reflection (rat
 I did the project in the snap of about 4 weeks, half of which I spent on vacation, so progress was not that fast :D </br>
 
 This was a fun learning project and I learned a lot about Kotlin and Jetpack Compose, although there are definitely
-a lot of things I could've done better such as implementing tests, writing a better backend and using a database for storing data. </br>
+a lot of things I could've done better such as implementing tests, writing a better backend and using a database for storing data. Also there are certain bugs with projections and google maps that I couldn't figure out a fix for. </br>
 
 I tried to use as little AI as I could, although I did resort to it for certain UI improvements, cleanups and certain other things </br>
 
