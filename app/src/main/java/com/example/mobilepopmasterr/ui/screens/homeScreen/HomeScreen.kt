@@ -44,7 +44,7 @@ import com.example.mobilepopmasterr.ui.screens.signIn.UserData
 
 /*
 *           HOME AND GAMEMODE SELECTION SCREEN
-*
+* The main screen for the game, which just says hi to the user and lets them choose the gamemode
 *
 */
 

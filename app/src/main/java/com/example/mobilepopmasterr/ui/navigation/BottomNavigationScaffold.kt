@@ -21,6 +21,12 @@ data class BottomNavItem(
     val unselectedIcon: ImageVector
 )
 
+/*           BOTTOM NAVIGATION SCAFFOLD
+* The thingy on the bottom of the screen that lets the user navigate between important screens
+* (like on most social medias lol), here they can go to home screen, profile and settings
+*
+* */
+
 @Composable
 fun BottomNavigationScaffold(
     navController: NavController,
@@ -49,9 +55,13 @@ fun BottomNavigationScaffold(
                             onClick = {
                                 if (!isSelected) {
                                     // makes it so clicking back button doesn't go to the previous navbar screen cuz that feels weird lol
+                                    // the restorestates and savestates are to solve an odd bug. may not be the ideal solution for it
                                     navController.navigate(item.route) {
-                                        popUpTo(Screens.Home.name)
+                                        popUpTo(navController.graph.startDestinationId) {
+                                            saveState = true
+                                        }
                                         launchSingleTop = true
+                                        restoreState = true
                                     }
                                 }
                             }

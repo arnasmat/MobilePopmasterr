@@ -5,6 +5,4 @@ package com.example.mobilepopmasterr.ui.viewModelTests
 // to reflect my actual learning progress and I currently don't quite understand how mocking
 // datastore and other things works.
 
-class ClassicGameViewModelTest {
-
-}
+class ClassicGameViewModelTest

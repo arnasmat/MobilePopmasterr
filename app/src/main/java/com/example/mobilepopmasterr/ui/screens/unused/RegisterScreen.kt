@@ -24,15 +24,12 @@ private fun RegisterScreen(
     modifier: Modifier = Modifier,
 ) {
 
-    val focusManager = LocalFocusManager.current
-    val usernameFocusRequester = remember { FocusRequester() }
-    val emailFocusRequester = remember { FocusRequester() }
-    val passwordFocusRequester = remember { FocusRequester() }
+    LocalFocusManager.current
+    remember { FocusRequester() }
+    remember { FocusRequester() }
+    remember { FocusRequester() }
 
     var scrollable by rememberSaveable { mutableStateOf(true) }
-    var disableScroll by rememberSaveable { mutableStateOf(false) }
-
-    var showWarning by rememberSaveable { mutableStateOf(false) }
 
     // TODO: figure out focus requesting on password fields, may not work cuz its in alpha?
 

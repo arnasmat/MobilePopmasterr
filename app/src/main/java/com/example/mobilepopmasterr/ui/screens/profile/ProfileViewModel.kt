@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 // Profile state
 data class ProfileState(
     val statistics: GameStatistics = GameStatistics(),
-    val mapType: MapType = MapType.NORMAL
 )
 
 class ProfileViewModel(
@@ -39,21 +38,12 @@ class ProfileViewModel(
                         currentStreak = dataStoreManager.getCurrentStreak(),
                         highestStreak = dataStoreManager.getHighestStreak()
                     ),
-                    mapType = dataStoreManager.getMapType()
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
     }
-
-    fun updateMapType(mapType: MapType) {
-        viewModelScope.launch {
-            dataStoreManager.setMapType(mapType)
-            _profileState.value = _profileState.value.copy(mapType = mapType)
-        }
-    }
-
     fun reloadStatistics() {
         loadStatistics()
     }

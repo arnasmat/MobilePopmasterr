@@ -175,9 +175,6 @@ class ClassicGameViewModel(
         )
     }
 
-    override fun onCleared() {
-        super.onCleared()
-    }
 }
 
 // I'll be honest, I was too lazy to think of math for score, so this is written by claude.

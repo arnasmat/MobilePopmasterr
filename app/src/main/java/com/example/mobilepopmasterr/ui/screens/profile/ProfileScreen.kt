@@ -116,12 +116,7 @@ fun ProfileScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 SignOutButton(onSignOut)
-                MapTypeSelector(
-                    currentMapType = profileState.mapType,
-                    onMapTypeChange = { newMapType ->
-                        viewModel.updateMapType(newMapType)
-                    }
-                )
+
             }
         }
 
@@ -318,62 +313,7 @@ private fun SignOutButton(
     }
 }
 
-@Composable
-fun MapTypeSelector(
-    currentMapType: MapType,
-    onMapTypeChange: (MapType) -> Unit
-) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp)
-        ) {
-            Text(
-                text = "Map Type",
-                style = MaterialTheme.typography.headlineSmall.copy(
-                    fontWeight = FontWeight.Bold
-                ),
-                color = MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
 
-            val mapTypes = listOf(
-                MapType.NORMAL to "Normal",
-                MapType.SATELLITE to "Satellite",
-                MapType.HYBRID to "Hybrid",
-                MapType.TERRAIN to "Terrain"
-            )
-
-            mapTypes.forEach { (mapType, name) ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    RadioButton(
-                        selected = currentMapType == mapType,
-                        onClick = { onMapTypeChange(mapType) }
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = name,
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-            }
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
