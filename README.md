@@ -54,6 +54,19 @@ Worth noting that the game works better on larger screens (i.e. tablets) as it d
 
 ## Screenshots
 
+<img width="408" height="883" alt="image" src="https://github.com/user-attachments/assets/430aa0c1-9b20-4165-9628-394bb06bfa8d" />
+<img width="408" height="883" alt="image" src="https://github.com/user-attachments/assets/95c8eb91-de7b-4e2a-82fc-70c9f811b231" />
+<img width="448" height="883" alt="image" src="https://github.com/user-attachments/assets/917c7dad-8022-4ad6-a65f-6c1abbdf7120" />
+<img width="408" height="883" alt="image" src="https://github.com/user-attachments/assets/b2648285-1de4-4bfd-b3d2-d09348df1729" />
+<img width="408" height="883" alt="image" src="https://github.com/user-attachments/assets/c88ead5d-3636-48a1-9d2c-e19bc3735b28" />
+<img width="408" height="883" alt="image" src="https://github.com/user-attachments/assets/a54458c7-fcd3-48a8-87cc-035248575de7" />
+<img width="408" height="883" alt="image" src="https://github.com/user-attachments/assets/48c43d25-2c28-4adc-ac18-97b3b35b5025" />
+<img width="408" height="883" alt="image" src="https://github.com/user-attachments/assets/6f998dcd-1bf4-4116-a55f-d21cc0f63ec4" />
+On a larger device (tablet) and with a different map setting:
+<img width="1413" height="883" alt="image" src="https://github.com/user-attachments/assets/12ef4adb-dcb4-4657-924b-708c0d23c939" />
+<img width="1413" height="883" alt="image" src="https://github.com/user-attachments/assets/d14586b2-f964-4f44-b179-d70854cbf105" />
+
+
 
 ## Reflection
 Since this is a learning project I thought I may include a small reflection (rather some unordered thoughts) :) </br>
