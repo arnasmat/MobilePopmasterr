@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import com.google.maps.android.compose.MapType
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.first
 
@@ -23,6 +24,9 @@ class DataStoreManager(
     // Streak stats
     private val CURRENT_STREAK = intPreferencesKey("current_streak")
     private val HIGHEST_STREAK = intPreferencesKey("highest_streak")
+
+    // Game settings
+    private val MAP_TYPE = intPreferencesKey("map_type")
 
     private suspend fun getIntKey(key: Preferences.Key<Int>): Int {
         return context.dataStore.data
@@ -98,5 +102,31 @@ class DataStoreManager(
     suspend fun getHighestStreak(): Int {
         return getIntKey(HIGHEST_STREAK)
     }
+
+    // --------------------------------------
+    // Game settings
+    // i dislike how i decode encode it to ints here, but I messed something up with enums and couldn't figure it out xd
+    suspend fun getMapType(): MapType {
+        val mapType = getIntKey(MAP_TYPE)
+        return when(mapType){
+            0 -> MapType.NORMAL
+            1 -> MapType.SATELLITE
+            2 -> MapType.HYBRID
+            3 -> MapType.TERRAIN
+            else -> MapType.NORMAL
+        }
+    }
+
+    suspend fun setMapType(mapType: MapType) {
+        val intMapType = when(mapType) {
+            MapType.NORMAL -> 0
+            MapType.SATELLITE -> 1
+            MapType.HYBRID -> 2
+            MapType.TERRAIN -> 3
+            else -> 0
+        }
+        writeInt(MAP_TYPE, intMapType)
+    }
+
 
 }

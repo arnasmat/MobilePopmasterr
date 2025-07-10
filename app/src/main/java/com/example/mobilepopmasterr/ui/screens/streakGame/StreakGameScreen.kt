@@ -1,6 +1,7 @@
 package com.example.mobilepopmasterr.ui.screens.streakGame
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -57,9 +59,11 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Polygon
 import com.google.maps.android.compose.rememberCameraPositionState
+import kotlinx.coroutines.launch
 
 /*
 *                                       STREAK GAME SCREEN
@@ -115,6 +119,8 @@ fun StreakGameScreen(
                     } else {
                         StreakGameChoiceSection(
                             viewModel = viewModel,
+                            gameState = gameState,
+                            cameraPositionState = cameraPositionState
                         )
                     }
                 } else {
@@ -178,7 +184,10 @@ fun StreakGameScreen(
 @Composable
 private fun StreakGameChoiceSection(
     viewModel: StreakGameViewModel,
+    gameState: StreakGameState,
+    cameraPositionState: CameraPositionState,
 ) {
+
     Text(
         text = "Which rectangle has a higher population?",
         style = MaterialTheme.typography.headlineSmall,
@@ -208,6 +217,44 @@ private fun StreakGameChoiceSection(
             modifier = Modifier.weight(1f)
         )
     }
+    if(gameState.redRectangle != null && gameState.blueRectangle != null) {
+        CantFindRectangleClickableText(
+            colorString = "Blue",
+            color = Color(0xFF3db0cc),
+            rectangle = gameState.blueRectangle.rectangle,
+            cameraPositionState = cameraPositionState,
+        )
+
+        CantFindRectangleClickableText(
+            colorString = "Red",
+            color = Color(0xFFFF6B35),
+            rectangle = gameState.redRectangle.rectangle,
+            cameraPositionState = cameraPositionState,
+        )
+    }
+}
+
+@Composable
+private fun CantFindRectangleClickableText(
+    colorString: String,
+    color: Color,
+    rectangle: Rectangle,
+    cameraPositionState: CameraPositionState,
+){
+    val coroutineScope = rememberCoroutineScope()
+
+    Text(
+        text = "Can't find the $colorString rectangle? Click here!",
+        color = color,
+        style = MaterialTheme.typography.bodyMedium,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                coroutineScope.launch {
+                    moveCameraToShowOneRectangle(cameraPositionState, rectangle)
+                }
+            }
+    )
 }
 
 @Composable
@@ -308,6 +355,7 @@ private fun StreakResultDisplay(
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
+                // the string building was written w/ ai, didn't even know you could do it like that. quite cool
                 text = buildAnnotatedString {
                     append("Blue: ")
                     withStyle(
@@ -402,6 +450,9 @@ private fun MapWithTwoRectangles(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
             uiSettings = uiSettings,
+            properties = MapProperties(
+                mapType = gameState.mapType,
+            ),
             onMapLoaded = {
                 viewModel.updateMapLoadedState(true)
             },
@@ -457,6 +508,18 @@ private suspend fun moveCameraToShowBothRectangles(
     }
 
     cameraPositionState.animate(CameraUpdateFactory.newLatLngBounds(bounds, padding))
+}
+
+private suspend fun moveCameraToShowOneRectangle(
+    cameraPositionState: CameraPositionState,
+    rectangle: Rectangle
+) {
+    val bounds = LatLngBounds.builder()
+        .include(rectangle.pos1)
+        .include(rectangle.pos2)
+        .build()
+
+    cameraPositionState.animate(CameraUpdateFactory.newLatLngBounds(bounds, 200))
 }
 
 @Preview

@@ -34,7 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mobilepopmasterr.getPopulationFromCoordinates
+import com.example.mobilepopmasterr.network.getPopulationFromCoordinates
 import com.example.mobilepopmasterr.ui.Rectangle
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.rememberMarkerState

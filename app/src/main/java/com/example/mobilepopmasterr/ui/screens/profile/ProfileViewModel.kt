@@ -5,16 +5,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mobilepopmasterr.data.DataStoreManager
 import com.example.mobilepopmasterr.data.GameStatistics
+import com.google.maps.android.compose.MapType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+
+// Profile state
+data class ProfileState(
+    val statistics: GameStatistics = GameStatistics(),
+    val mapType: MapType = MapType.NORMAL
+)
 
 class ProfileViewModel(
     private val dataStoreManager: DataStoreManager
 ) : ViewModel() {
 
-    private val _statistics = MutableStateFlow(GameStatistics())
-    val statistics = _statistics.asStateFlow()
+    private val _profileState = MutableStateFlow(ProfileState())
+    val profileState = _profileState.asStateFlow()
 
     init {
         loadStatistics()
@@ -23,17 +30,27 @@ class ProfileViewModel(
     private fun loadStatistics() {
         viewModelScope.launch {
             try {
-                _statistics.value = GameStatistics(
-                    totalScore = dataStoreManager.getTotalScore(),
-                    gamesPlayed = dataStoreManager.getGamesPlayed(),
-                    averageScore = dataStoreManager.getAverageScore(),
-                    perfectGuesses = dataStoreManager.getPerfectGuesses(),
-                    currentStreak = dataStoreManager.getCurrentStreak(),
-                    highestStreak = dataStoreManager.getHighestStreak()
+                _profileState.value = _profileState.value.copy(
+                    statistics = GameStatistics(
+                        totalScore = dataStoreManager.getTotalScore(),
+                        gamesPlayed = dataStoreManager.getGamesPlayed(),
+                        averageScore = dataStoreManager.getAverageScore(),
+                        perfectGuesses = dataStoreManager.getPerfectGuesses(),
+                        currentStreak = dataStoreManager.getCurrentStreak(),
+                        highestStreak = dataStoreManager.getHighestStreak()
+                    ),
+                    mapType = dataStoreManager.getMapType()
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }
+    }
+
+    fun updateMapType(mapType: MapType) {
+        viewModelScope.launch {
+            dataStoreManager.setMapType(mapType)
+            _profileState.value = _profileState.value.copy(mapType = mapType)
         }
     }
 

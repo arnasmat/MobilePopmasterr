@@ -4,8 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mobilepopmasterr.data.DataStoreManager
-import com.example.mobilepopmasterr.getRectangleAndPopulation
+import com.example.mobilepopmasterr.network.getRectangleAndPopulation
 import com.example.mobilepopmasterr.ui.Rectangle
+import com.google.maps.android.compose.MapType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -31,7 +32,8 @@ data class StreakGameState(
     val guessCorrect: Boolean? = null,
     val showResult: Boolean = false,
     val errorMessage: String? = null,
-    val isWaitingForNextRound: Boolean = false
+    val isWaitingForNextRound: Boolean = false,
+    val mapType: MapType = MapType.NORMAL,
 )
 
 class StreakGameViewModel(
@@ -44,6 +46,7 @@ class StreakGameViewModel(
     init {
         loadCurrentStreak()
         loadRectangles()
+        loadMapType()
     }
 
     private fun loadCurrentStreak() {
@@ -96,6 +99,15 @@ class StreakGameViewModel(
         }
     }
 
+    private fun loadMapType() {
+        viewModelScope.launch {
+            val mapType = dataStoreManager.getMapType()
+            _gameState.value = _gameState.value.copy(
+                mapType = mapType
+            )
+        }
+    }
+
     fun submitGuess(chosenRectangle: RectangleColor) {
         val state = _gameState.value
 
@@ -140,7 +152,8 @@ class StreakGameViewModel(
 
     fun playAgain() {
         _gameState.value = StreakGameState(
-            isMapLoaded = _gameState.value.isMapLoaded
+            isMapLoaded = _gameState.value.isMapLoaded,
+            mapType = _gameState.value.mapType,
         )
         loadCurrentStreak()
         loadRectangles()

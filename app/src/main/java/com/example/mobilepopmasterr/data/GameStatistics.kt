@@ -8,8 +8,6 @@ import androidx.compose.material.icons.filled.Games
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Timeline
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.mobilepopmasterr.ui.theme.LightPink

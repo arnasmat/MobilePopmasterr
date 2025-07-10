@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mobilepopmasterr.data.DataStoreManager
-import com.example.mobilepopmasterr.getRectangleAndPopulation
+import com.example.mobilepopmasterr.network.getRectangleAndPopulation
 import com.example.mobilepopmasterr.ui.Rectangle
+import com.google.maps.android.compose.MapType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlin.compareTo
 import kotlin.math.*
 
 
@@ -28,6 +28,7 @@ data class ClassicGameState(
     val guessedPopulation: Long? = null,
     val currentInputGuess: String = "",
     val errorMessage: String? = null,
+    val mapType: MapType = MapType.NORMAL,
 )
 
 class ClassicGameViewModel(
@@ -38,6 +39,7 @@ class ClassicGameViewModel(
 
     init {
         loadRectangle()
+        loadMapType()
     }
 
     fun loadRectangle() {
@@ -63,6 +65,16 @@ class ClassicGameViewModel(
                     errorMessage = e.message
                 )
             }
+        }
+    }
+
+
+    private fun loadMapType() {
+        viewModelScope.launch {
+            val mapType = dataStoreManager.getMapType()
+            _gameState.value = _gameState.value.copy(
+                mapType = mapType
+            )
         }
     }
 
@@ -124,7 +136,8 @@ class ClassicGameViewModel(
         val currentMapLoadedState = _gameState.value.isMapLoaded
         _gameState.value = ClassicGameState(
             isMapLoaded = currentMapLoadedState,
-            currentInputGuess = ""
+            currentInputGuess = "",
+            mapType = _gameState.value.mapType,
         )
         loadRectangle()
     }

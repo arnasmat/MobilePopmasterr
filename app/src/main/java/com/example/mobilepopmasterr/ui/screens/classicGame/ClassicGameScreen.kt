@@ -1,7 +1,7 @@
 package com.example.mobilepopmasterr.ui.screens.classicGame
 
 import android.widget.Toast
-import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,19 +12,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
+import kotlinx.coroutines.launch
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SheetValue
@@ -45,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -53,10 +48,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilepopmasterr.data.DataStoreManager
-import com.example.mobilepopmasterr.ui.components.PopulationFormatTransformation
 import com.example.mobilepopmasterr.ui.Rectangle
 import com.example.mobilepopmasterr.ui.components.BackToGameSelectionButton
 import com.example.mobilepopmasterr.ui.components.LoadingIndicator
+import com.example.mobilepopmasterr.ui.components.PopulationFormatTransformation
 import com.example.mobilepopmasterr.ui.components.formatPopulationString
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -64,6 +59,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Polygon
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -76,14 +72,13 @@ import com.google.maps.android.compose.rememberCameraPositionState
 *
 */
 
+// TODO: KNOWN ISSUES:
+// google maps makes the rectangle mess up around the date line, so sometimes it's not displayed correctly
 /*
  TODO: Backend uses WGS84, this uses web mercator, so it's inconsistent. Unfortunately I realized ->
  -> that too far into the project and do not currently have the time to fix it.
   The population given here currently is not reliable.
 */
-
-// TODO: KNOWN ISSUES:
-// google maps makes the rectangle mess up around the date line, so sometimes it's not displayed correctly
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -136,13 +131,16 @@ fun ClassicGameScreen(
                     if (gameState.isRectangleLoadStarted && !gameState.isRectangleLoaded) {
                         LoadingIndicator()
                     } else {
+                        // Bottom sheet after load, the thing the player inputs their guess
                         PopulationGuessInputSection(
                             viewModel = viewModel,
                             userGuess = userGuess,
                             onUserGuessChange = { newValue ->
                                 userGuess = newValue
                                 viewModel.updateUserGuess(newValue)
-                            }
+                            },
+                            cameraPositionState = cameraPositionState,
+                            gameState = gameState
                         )
                     }
                 } else {
@@ -194,6 +192,7 @@ fun ClassicGameScreen(
                     }
                 }
             }
+
         }
     }}
 
@@ -202,7 +201,11 @@ private fun PopulationGuessInputSection(
     viewModel: ClassicGameViewModel,
     userGuess: String,
     onUserGuessChange: (String) -> Unit,
+    cameraPositionState: CameraPositionState,
+    gameState: ClassicGameState,
 ){
+    val coroutineScope = rememberCoroutineScope()
+
     OutlinedTextField(
         value = userGuess,
         onValueChange = { newValue ->
@@ -225,9 +228,25 @@ private fun PopulationGuessInputSection(
         onClick = {
             viewModel.submitGuess(userGuess)
         },
-        modifier = Modifier.fillMaxWidth().padding(0.dp, 8.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+//            .padding(0.dp, 8.dp)
     ) {
         Text("Submit")
+    }
+    if(gameState.rectangle != null) {
+        Text(
+            text = "Can't find the rectangle? Click here!",
+            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    coroutineScope.launch {
+                        moveCameraToRectangle(cameraPositionState, gameState.rectangle)
+                    }
+                }
+        )
     }
 }
 
@@ -243,7 +262,9 @@ private fun PopulationResultSection(
             onUserGuessChange("")
             viewModel.playAgain()
         },
-        modifier = Modifier.fillMaxWidth().padding(0.dp, 8.dp)
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(0.dp, 8.dp)
     ) {
         Text("Play Again")
     }
@@ -317,6 +338,7 @@ private fun MapWithRectangle(
     gameState: ClassicGameState,
     cameraPositionState: CameraPositionState = rememberCameraPositionState(),
 ){
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Top,
@@ -326,6 +348,7 @@ private fun MapWithRectangle(
             zoomControlsEnabled = true,
             scrollGesturesEnabled = true,
             zoomGesturesEnabled = true,
+            rotationGesturesEnabled = false,
             tiltGesturesEnabled = false,
         )
 
@@ -336,6 +359,12 @@ private fun MapWithRectangle(
             onMapLoaded = {
                 viewModel.updateMapLoadedState(true)
             },
+            properties = MapProperties(
+                mapType = gameState.mapType,
+                // as extra options?
+//                isBuildingEnabled = false,
+//                isIndoorEnabled = true,
+            ),
         ) {
             gameState.rectangle?.let { rectangle ->
                 Polygon(

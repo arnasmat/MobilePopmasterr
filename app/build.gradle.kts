@@ -52,9 +52,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.navigation.compose)
-    implementation (libs.androidx.material.icons.extended)
+    implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.appcompat)
 
     implementation(libs.play.services.maps)
     implementation(libs.maps.compose)
@@ -73,13 +72,12 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.play.services.auth)
 
-    implementation("androidx.datastore:datastore-preferences:1.1.7")
-
-    implementation("androidx.datastore:datastore-preferences-rxjava2:1.1.7")
-
-    implementation("androidx.datastore:datastore-preferences-rxjava3:1.1.7")
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore.preferences.rxjava2)
+    implementation(libs.androidx.datastore.preferences.rxjava3)
 
     testImplementation(libs.junit)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

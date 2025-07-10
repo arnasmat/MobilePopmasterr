@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +26,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -61,10 +61,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilepopmasterr.R
 
+/*
+*               SIGN IN SCREEN
+* This screen allows for users to sign in. Currently they can only sign in with Google,
+* as I didn't have enough time to implement email/password registration, handling profile picture
+* changing logic, handling user data, etc., so I felt it was easier to make google sign in.
+* However most of the screen is taken up by google sign in because:
+* 1. feels less empty and looks nicer lol
+* 2. I may still implement email/pass registration in the future
+*
+* Also worth noting that the functionality for google login was copied from a youtube tutorial,
+* that is outdated and uses a lot of deprecated features.
+* */
 
-// The email/register don't work. Currently the only way to log in is via google.
-// I'd implement email/password if I was working with a database, unfortunately I am not doing that for htis project
-// (and do not have enough time)
+// TODO: fix this messy code
 @Composable
 fun SignInScreen(
     state: SignInState,
@@ -101,7 +111,6 @@ fun SignInScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         item {
-            // App Title
             Text(
                 text = "POPMASTERR",
                 style = MaterialTheme.typography.headlineLarge.copy(
@@ -113,7 +122,6 @@ fun SignInScreen(
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            // Subtitle
             Text(
                 text = stringResource(R.string.signin_subtitle),
                 style = MaterialTheme.typography.bodyLarge,
@@ -122,7 +130,6 @@ fun SignInScreen(
                 modifier = Modifier.padding(bottom = 32.dp)
             )
 
-            // Main Sign In Card
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -269,7 +276,7 @@ fun SignInScreen(
                     .padding(vertical = 24.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier.weight(1f),
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f)
                 )

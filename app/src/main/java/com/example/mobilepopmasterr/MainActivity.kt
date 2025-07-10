@@ -1,6 +1,5 @@
 package com.example.mobilepopmasterr
 
-//import com.example.mobilepopmasterr.ui.navigation.PopmasterrApp
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -20,6 +19,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mobilepopmasterr.ui.navigation.Screens
+import com.example.mobilepopmasterr.ui.screens.homeScreen.HomeScreen
 import com.example.mobilepopmasterr.ui.screens.profile.ProfileScreen
 import com.example.mobilepopmasterr.ui.screens.classicGame.ClassicGameScreen
 import com.example.mobilepopmasterr.ui.screens.signIn.GoogleAuthUIClient
@@ -29,9 +29,10 @@ import com.example.mobilepopmasterr.ui.screens.streakGame.StreakGameScreen
 import com.example.mobilepopmasterr.ui.theme.MobilePopmasterrTheme
 import com.google.android.gms.auth.api.identity.Identity
 import kotlinx.coroutines.launch
+// TODO: make a bottom navigation bar with a scaffold
+// TODO: settings,
+// TODO: MOVE ALL STRINGS TO STRING RESOURCES!!
 class MainActivity : ComponentActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -45,10 +46,6 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
-                // TODO: make a bottom navigation bar with a scaffold
-                // TODO: streak gamemode, settings, gamemodeselection
-                // if I have time: leaderboard? that is if I do it with db
-
                 NavHost(
                     navController = navController,
                     startDestination = Screens.SignIn.name,
@@ -56,7 +53,14 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
 
                 ) {
-                    composable(route = Screens.Home.name) {}
+                    composable(route = Screens.Home.name) {
+                        HomeScreen(
+                            userData = googleAuthUIClient.getSignedInUser(),
+                            onNavigateToClassicGame = { navController.navigate(Screens.ClassicGame.name) },
+                            onNavigateToStreakGame = { navController.navigate(Screens.StreakGame.name) },
+                            onNavigateToProfile = { navController.navigate(Screens.Profile.name) }
+                        )
+                    }
                     composable(route = Screens.SignIn.name) {
                         val viewModel = viewModel<SignInViewmodel>()
                         val state by viewModel.state.collectAsStateWithLifecycle()
@@ -65,7 +69,7 @@ class MainActivity : ComponentActivity() {
                             key1 = Unit
                         ) {
                             if (googleAuthUIClient.getSignedInUser() != null) {
-                                navController.navigate(Screens.Profile.name)
+                                navController.navigate(Screens.Home.name)
                             }
                         }
 
@@ -115,7 +119,6 @@ class MainActivity : ComponentActivity() {
 
 
                     composable(route = Screens.Settings.name) {}
-                    composable(route = Screens.GameModeSelection.name) {}
                     composable(route = Screens.ClassicGame.name) {
                         ClassicGameScreen(
                             onBackClick = { navController.popBackStack() }
@@ -141,12 +144,8 @@ class MainActivity : ComponentActivity() {
                                     navController.popBackStack()
                                 }
                             },
-                            onGameStart = { navController.navigate(Screens.ClassicGame.name) },
-                            onStreakStart = { navController.navigate(Screens.StreakGame.name) },
                         )
                     }
-                    composable(route = Screens.Leaderboard.name) {}
-                    composable(route = Screens.About.name) {}
                 }
             }
         }

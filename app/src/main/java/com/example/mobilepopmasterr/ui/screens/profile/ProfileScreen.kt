@@ -19,20 +19,18 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Games
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,6 +50,7 @@ import coil3.compose.AsyncImage
 import com.example.mobilepopmasterr.data.DataStoreManager
 import com.example.mobilepopmasterr.data.GameStatistics
 import com.example.mobilepopmasterr.ui.screens.signIn.UserData
+import com.google.maps.android.compose.MapType
 
 /*
 *                                       PROFILE SCREEN
@@ -68,8 +67,6 @@ import com.example.mobilepopmasterr.ui.screens.signIn.UserData
 fun ProfileScreen(
     userData: UserData?,
     onSignOut: () -> Unit,
-    onGameStart: () -> Unit,
-    onStreakStart: () -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -77,8 +74,8 @@ fun ProfileScreen(
     val viewModel: ProfileViewModel = viewModel(
         factory = ProfileViewModelFactory(dataStoreManager)
     )
-    val statistics by viewModel.statistics.collectAsState()
 
+    val profileState = viewModel.profileState.collectAsState().value
 
     LazyColumn(
         modifier = Modifier
@@ -110,7 +107,7 @@ fun ProfileScreen(
         }
 
         item {
-            UserStatistics(statistics)
+            UserStatistics(profileState.statistics)
         }
 
         item {
@@ -118,60 +115,13 @@ fun ProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                // Game buttons, todo: move to a seperate screen
-                Button(
-                    onClick = onGameStart,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    ),
-                    shape = RoundedCornerShape(16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Games,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Start Classic Game",
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 16.sp
-                        )
-                    )
-                }
-
-                // Start Game Button
-                Button(
-                    onClick = onStreakStart,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(56.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        contentColor = MaterialTheme.colorScheme.onPrimary
-                    ),
-                    shape = RoundedCornerShape(16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Games,
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp)
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Start Streak Game",
-                        style = MaterialTheme.typography.labelLarge.copy(
-                            fontWeight = FontWeight.SemiBold,
-                            fontSize = 16.sp
-                        )
-                    )
-                }
                 SignOutButton(onSignOut)
+                MapTypeSelector(
+                    currentMapType = profileState.mapType,
+                    onMapTypeChange = { newMapType ->
+                        viewModel.updateMapType(newMapType)
+                    }
+                )
             }
         }
 
@@ -368,6 +318,63 @@ private fun SignOutButton(
     }
 }
 
+@Composable
+fun MapTypeSelector(
+    currentMapType: MapType,
+    onMapTypeChange: (MapType) -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            Text(
+                text = "Map Type",
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            val mapTypes = listOf(
+                MapType.NORMAL to "Normal",
+                MapType.SATELLITE to "Satellite",
+                MapType.HYBRID to "Hybrid",
+                MapType.TERRAIN to "Terrain"
+            )
+
+            mapTypes.forEach { (mapType, name) ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    RadioButton(
+                        selected = currentMapType == mapType,
+                        onClick = { onMapTypeChange(mapType) }
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = name,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            }
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenPreview() {
@@ -378,7 +385,5 @@ fun ProfileScreenPreview() {
             profilePictureUrl = null
         ),
         onSignOut = {},
-        onGameStart = {},
-        onStreakStart = {},
     )
 }
