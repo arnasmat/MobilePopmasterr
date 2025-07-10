@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-<!--        TODO: RESTRICT! -->
+<!--        It's restricted, so it wont work on any other apps anyways, so no point in hiding it -->
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAIzYT8kWGuqDuBbc1PLxS-zuPeh9HTnR8" />
     </application>

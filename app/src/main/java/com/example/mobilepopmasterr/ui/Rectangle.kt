@@ -17,5 +17,4 @@ data class Rectangle(val pos1: LatLng, val pos2: LatLng) {
             LatLng(north, west)
         )
     }
-    // TODO: Make it so the rectangle doesn't mess up w/ date time lines. if I have time :(
 }

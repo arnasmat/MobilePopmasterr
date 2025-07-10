@@ -25,6 +25,10 @@ import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.mobilepopmasterr.ui.theme.WarningRed
 
+
+/* I created these warnings for a thing I thought I was going to implement, but I didn't :(
+Still, I believe they can definitely be useful in the future, so I will keep them here
+* */
 @Composable
 private fun GenericWarning(
     message: String,

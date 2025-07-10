@@ -1,4 +1,5 @@
 package com.example.mobilepopmasterr.network
+import com.example.mobilepopmasterr.baseUrl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
@@ -10,8 +11,6 @@ import com.example.mobilepopmasterr.ui.Rectangle
 import com.google.android.gms.maps.model.LatLng
 
 
-// TODO: .env!!!!!!!! .env!!!!
-const val baseUrl = "https://mobilepopmasterrpyback-194694347863.europe-west1.run.app"
 
 suspend fun getPopulationFromCoordinates(rectangle: Rectangle): String? = withContext(Dispatchers.IO) {
     val client = OkHttpClient()

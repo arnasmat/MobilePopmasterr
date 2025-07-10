@@ -11,13 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
+// I only ended up making it work w/ light theme, but I may add dark later. I just didn't think
+// it looked as nice
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
     tertiary = Pink80,
     background = DarkGray,
-    // TODO: adjust these to not be dark gray and differnt
-    // TODO : custom colors n stuff
 /*
     surface = DarkGray,
     onPrimary = DarkGray,
@@ -44,8 +44,6 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1C1B1F),
 )
 
-// TODO: figure out if I want to make this adaptable to themes n shit
-// TODO: same for dynamic colors
 @Composable
 fun MobilePopmasterrTheme(
 //    darkTheme: Boolean = isSystemInDarkTheme()

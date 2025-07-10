@@ -73,7 +73,6 @@ import kotlinx.coroutines.launch
 *
 */
 
-//TODO: improve the code here, make a game selection menu screen thing!
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StreakGameScreen(

@@ -6,6 +6,7 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 
 // I'll be honest, this was written by claude
+// This is used to make the population string in classic look better and clearer( i.e. 123456789 -> 1 234 567 890)
 class PopulationFormatTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
         val original = text.text

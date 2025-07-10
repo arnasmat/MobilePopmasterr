@@ -162,7 +162,7 @@ private fun GameModeSelectionSection(
         ) {
             GameModeCard(
                 title = "Classic Mode",
-                description = "Guess population sizes and build your score",
+                description = "Guess the population within a given rectangle!",
                 icon = Icons.Default.EmojiEvents,
                 statLabel = "Total Score: ",
                 statValue = totalScore.toString(),
@@ -173,7 +173,7 @@ private fun GameModeSelectionSection(
 
             GameModeCard(
                 title = "Streak Mode",
-                description = "Compare populations and build your streak",
+                description = "Guess which rectangle has a higher population!",
                 icon = Icons.AutoMirrored.Filled.TrendingUp,
                 statLabel = "Current Streak: ",
                 statValue = currentStreak.toString(),
@@ -262,7 +262,7 @@ private fun GameModeCard(
 }
 
 
-@Preview
+@Preview (showBackground = true)
 @Composable
 private fun HomeScreenPreview() {
     HomeScreen(
