@@ -17,3 +17,5 @@ local.properties
 app/google-services.json
 .idea/
 .kotlin/
+# this is the stupidest workaround ever, but I cba to figure out .env on gradle rn so I just did this lmaoo
+app/src/main/java/com/example/mobilepopmasterr/env.kt
