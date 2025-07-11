@@ -27,7 +27,7 @@
 - - Local statistics tracking for both gamemodes(tracks classic games played, total score, average score, perfect games, current streak and best streak)
 - A simple settings page to change the map type (will expand in the future)
 </br>
-[Screenshots](#screenshots)
+
 
 ## More in depth about gamemodes
 The population is calculated in a backend that's written in python and uses rasterio from a [.tif file with population density of each pixel](https://human-settlement.emergency.copernicus.eu/download.php?ds=pop) </br>
