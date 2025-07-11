@@ -125,7 +125,6 @@ fun ProfileScreen(
         }
     }
 
-    // Reload statistics every time the screen is resumed
     LaunchedEffect(Unit) {
         viewModel.reloadStatistics()
     }

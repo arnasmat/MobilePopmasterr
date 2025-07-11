@@ -177,8 +177,7 @@ class ClassicGameViewModel(
 
 }
 
-// I'll be honest, I was too lazy to think of math for score, so this is written by claude.
-// I dislike the implementation, but it works well enough for now lol
+// Temporary version written by claude, works well enough for now. Will change later.
 fun calculateScore(guessedPopulation: Long, actualPopulation: Long): Int {
     // Handle edge cases
     if (actualPopulation <= 0) return 0
@@ -205,7 +204,6 @@ fun calculateScore(guessedPopulation: Long, actualPopulation: Long): Int {
     return maxOf(1, minOf(5000, finalScore))
 }
 
-// I don't quite get factories
 class ClassicGameViewModelFactory(
     private val dataStoreManager: DataStoreManager
 ) : ViewModelProvider.Factory {

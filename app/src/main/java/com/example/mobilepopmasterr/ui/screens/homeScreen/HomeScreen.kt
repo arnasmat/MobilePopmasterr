@@ -114,7 +114,7 @@ private fun WelcomeSection(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                // this is all in case I implement anonymous sign in via firebase later on btw
+                // (For when I add anonymous sign in)
                 text = if (userData?.username != null) {
                     "Welcome back to Popmasterr, ${userData.username}!"
                 } else {

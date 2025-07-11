@@ -1,4 +1,3 @@
-// app/src/main/java/com/example/mobilepopmasterr/data/StatisticsData.kt
 package com.example.mobilepopmasterr.data
 
 import androidx.compose.material.icons.Icons
@@ -27,7 +26,7 @@ data class GameStatistics(
     val currentStreak: Int = 0,
     val highestStreak: Int = 0
 ) {
-    // random icons for now, may change later
+    // The icons currently are kinda random, may change!
     fun toStatisticItems(): List<StatisticItem> = listOf(
         StatisticItem(
             title = "Games Played",

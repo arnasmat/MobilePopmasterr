@@ -54,7 +54,6 @@ fun BottomNavigationScaffold(
                             selected = isSelected,
                             onClick = {
                                 if (!isSelected) {
-                                    // makes it so clicking back button doesn't go to the previous navbar screen cuz that feels weird lol
                                     // the restorestates and savestates are to solve an odd bug. may not be the ideal solution for it
                                     navController.navigate(item.route) {
                                         popUpTo(navController.graph.startDestinationId) {

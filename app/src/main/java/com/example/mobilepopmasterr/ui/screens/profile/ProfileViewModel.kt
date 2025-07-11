@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-// Profile state
 data class ProfileState(
     val statistics: GameStatistics = GameStatistics(),
 )

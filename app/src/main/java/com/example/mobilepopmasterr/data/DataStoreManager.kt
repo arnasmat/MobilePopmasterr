@@ -105,7 +105,8 @@ class DataStoreManager(
 
     // --------------------------------------
     // Game settings
-    // i dislike how i decode encode it to ints here, but I messed something up with enums and couldn't figure it out xd
+    /* I dislike that I decode and encode into ints. In the future I'd like to figure out a better
+     solution to store enum types in DataStore.*/
     suspend fun getMapType(): MapType {
         val mapType = getIntKey(MAP_TYPE)
         return when(mapType){

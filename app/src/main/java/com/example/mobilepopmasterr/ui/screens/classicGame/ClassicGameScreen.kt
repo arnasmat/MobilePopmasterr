@@ -72,13 +72,17 @@ import com.google.maps.android.compose.rememberCameraPositionState
 *
 */
 
-// TODO: KNOWN ISSUES:
-// google maps makes the rectangle mess up around the date line, so sometimes it's not displayed correctly
 /*
- TODO: Backend uses WGS84, this uses web mercator, so it's inconsistent. Unfortunately I realized ->
- -> that too far into the project and do not currently have the time to fix it.
-  The population given here currently is not reliable.
+ TODO: KNOWN ISSUES:
+
+- Google maps makes the rectangle mess up around the date line, so sometimes large rectangles
+  are not displayed correctly.
+
+ - Backend uses WGS84, this uses web mercator, so the population given here currently is not always reliable.
+ (specifically around map distortions)
+
 */
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -131,7 +135,6 @@ fun ClassicGameScreen(
                     if (gameState.isRectangleLoadStarted && !gameState.isRectangleLoaded) {
                         LoadingIndicator()
                     } else {
-                        // Bottom sheet after load, the thing the player inputs their guess
                         PopulationGuessInputSection(
                             viewModel = viewModel,
                             userGuess = userGuess,
@@ -144,7 +147,6 @@ fun ClassicGameScreen(
                         )
                     }
                 } else {
-                    // Bottom sheet after guess is clicked: Result (score, guess, actual pop) and play again button
                     PopulationResultSection(
                         gameState = gameState,
                         viewModel = viewModel,
@@ -173,14 +175,12 @@ fun ClassicGameScreen(
 
             // ! Helper effects
 
-            // Move camera to rectangle when both map and rectangle are loaded
             LaunchedEffect(gameState.isMapLoaded, gameState.isRectangleLoaded) {
                 if(gameState.isMapLoaded && gameState.isRectangleLoaded && gameState.rectangle != null){
                     moveCameraToRectangle(cameraPositionState, gameState.rectangle!!)
                 }
             }
 
-            // Show errors via toast
             val context = LocalContext.current
             LaunchedEffect(gameState.errorMessage) {
                 gameState.errorMessage?.let { errorMessage ->
@@ -230,7 +230,6 @@ private fun PopulationGuessInputSection(
         },
         modifier = Modifier
             .fillMaxWidth()
-//            .padding(0.dp, 8.dp)
     ) {
         Text("Submit")
     }
@@ -361,9 +360,6 @@ private fun MapWithRectangle(
             },
             properties = MapProperties(
                 mapType = gameState.mapType,
-                // as extra options?
-//                isBuildingEnabled = false,
-//                isIndoorEnabled = true,
             ),
         ) {
             gameState.rectangle?.let { rectangle ->
@@ -391,7 +387,6 @@ private suspend fun moveCameraToRectangle(
     cameraPositionState.animate(CameraUpdateFactory.newLatLngBounds(bounds, 100))
 }
 
-// preview here is kinda pointless as it doesn't show anything loaded
 @Preview
 @Composable
 private fun PreviewClassicGameScreen(){

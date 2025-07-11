@@ -23,11 +23,11 @@ import androidx.compose.ui.unit.dp
 
 // General map components that work both for streak and classic
 
+// (this is the back button in top left in gamemodes)
 @Composable
 fun BackToGameSelectionButton(
     onBackClick: () -> Unit = {},
 ){
-    // (this is the back button in top left, I think the naming could be better, but I can't think of anything better rn)
     IconButton(
         onClick = onBackClick,
         modifier = Modifier

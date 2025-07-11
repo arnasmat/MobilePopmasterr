@@ -11,8 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
-// I only ended up making it work w/ light theme, but I may add dark later. I just didn't think
-// it looked as nice
+// I only made light theme work. May add dark theme in the future.
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,

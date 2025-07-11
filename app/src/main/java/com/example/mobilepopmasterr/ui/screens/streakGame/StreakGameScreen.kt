@@ -354,7 +354,6 @@ private fun StreakResultDisplay(
             Spacer(modifier = Modifier.height(12.dp))
 
             Text(
-                // the string building was written w/ ai, didn't even know you could do it like that. quite cool
                 text = buildAnnotatedString {
                     append("Blue: ")
                     withStyle(
@@ -491,22 +490,7 @@ private suspend fun moveCameraToShowBothRectangles(
         .include(rectangleB.pos2)
         .build()
 
-    // Calculate dynamic padding based on bounds size
-    val northeast = bounds.northeast
-    val southwest = bounds.southwest
-    val latSpan = northeast.latitude - southwest.latitude
-    val lngSpan = northeast.longitude - southwest.longitude
-    val maxSpan = maxOf(latSpan, lngSpan)
-
-    // Use percentage-based padding that scales with rectangle size
-    val padding = when {
-        maxSpan > 50 -> 50  // Very large rectangles - minimal padding
-        maxSpan > 20 -> 100 // Large rectangles - small padding
-        maxSpan > 5 -> 150  // Medium rectangles - medium padding
-        else -> 200         // Small rectangles - more padding for better visibility
-    }
-
-    cameraPositionState.animate(CameraUpdateFactory.newLatLngBounds(bounds, padding))
+    cameraPositionState.animate(CameraUpdateFactory.newLatLngBounds(bounds, 200))
 }
 
 private suspend fun moveCameraToShowOneRectangle(

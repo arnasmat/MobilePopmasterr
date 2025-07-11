@@ -109,7 +109,7 @@ fun SignInScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
-            // Divider with "OR" text
+            // Divider with "OR" text in the middle
             OrDivider()
 
             SignInWithGoogleButton(onSignInClick)
@@ -184,7 +184,6 @@ private fun EmailAndPasswordSignInSection(
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Sign In Title
             Text(
                 text = stringResource(R.string.signin_button),
                 style = MaterialTheme.typography.headlineSmall.copy(
@@ -194,7 +193,6 @@ private fun EmailAndPasswordSignInSection(
                 modifier = Modifier.padding(bottom = 24.dp)
             )
 
-            // Email Field
             OutlinedTextField(
                 value = email,
                 onValueChange = { onEmailChange(it) },
@@ -216,7 +214,6 @@ private fun EmailAndPasswordSignInSection(
                 )
             )
 
-            // Password Field
             OutlinedTextField(
                 value = password,
                 onValueChange = { onPasswordChange(it) },
@@ -262,7 +259,6 @@ private fun EmailAndPasswordSignInSection(
                 )
             )
 
-            // Sign In Button
             Button(
                 onClick = { onEmailSignIn(email, password) },
                 modifier = Modifier
@@ -282,7 +278,6 @@ private fun EmailAndPasswordSignInSection(
                 )
             }
 
-            // Register Link
             Row(
                 modifier = Modifier
                     .padding(top = 16.dp)

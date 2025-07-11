@@ -14,8 +14,6 @@ import kotlinx.coroutines.tasks.await
 
 //The code here is copied from https://www.youtube.com/watch?v=zCIfBbm06QM
 // Ideally I'd remake it, as a lot of it is deprecated, but this is a quick solution to get the app working
-// and at this current point of time I do not have enough time to figure out how to do it properly
-// (I tried and failed for several hours, so this is here as it works for now)
 class GoogleAuthUIClient(
     private val context: Context,
     private val oneTapClient: SignInClient,

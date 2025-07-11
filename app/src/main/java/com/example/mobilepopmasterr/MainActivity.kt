@@ -36,6 +36,7 @@ import com.example.mobilepopmasterr.ui.screens.signIn.SignInViewmodel
 import com.example.mobilepopmasterr.ui.screens.streakGame.StreakGameScreen
 import com.example.mobilepopmasterr.ui.theme.MobilePopmasterrTheme
 import com.google.android.gms.auth.api.identity.Identity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -123,16 +124,13 @@ class MainActivity : ComponentActivity() {
 private fun SignInHandler(
     googleAuthUIClient: GoogleAuthUIClient,
     navController: NavController,
-
     ) {
     val viewModel = viewModel<SignInViewmodel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(
-        key1 = Unit
-    ) {
+    LaunchedEffect(Unit) {
         if (googleAuthUIClient.getSignedInUser() != null) {
             navController.navigate(Screens.Home.name)
         }
@@ -161,7 +159,7 @@ private fun SignInHandler(
                 Toast.LENGTH_LONG
             ).show()
 
-            navController.navigate(Screens.Profile.name)
+            navController.navigate(Screens.Home.name)
             viewModel.resetState()
         }
     }
