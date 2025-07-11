@@ -1,4 +1,4 @@
-<img width="1872" height="383" alt="image" src="https://github.com/user-attachments/assets/2bb7f0c5-c170-4734-ac7e-797d8741905d" />
+![Popmasterr - a geography game about population density written in Kotlin and Jetpack Compose"](https://github.com/user-attachments/assets/2bb7f0c5-c170-4734-ac7e-797d8741905d "Logo")
 
 
 ## Table of Contents
