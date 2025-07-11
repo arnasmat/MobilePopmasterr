@@ -10,12 +10,12 @@
 - [Reflection](#reflection)
 
 ## How to build
+If you don't want to build, use the provided release, [Click here for the newest release](https://github.com/arnasmat/MobilePopmasterr/releases/tag/v0.5b)
 - Send me a nice message on whatever social media you can find me for the backend link :)
 - Put it in networkrequests or env.kt as baseUrl
 - (Theoretically you don't have to get a personal maps api key, but I recommend getting one and replacing it in androidmanifest.xml. Either way it's restricted to work only on this app)
 - Open the project in Android Studio
 - Build and run the app on an emulator or a physical device (min sdk is 26)
-  (Sorry, I will not be providing a build for this)
 
 ## Features
 - **Two gamemodes**:
