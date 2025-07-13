@@ -101,7 +101,7 @@ fun SignInScreen(
             SignInHeader()
 
             MediumWarning(
-                message = "Please note that only Google sign-in is currently supported.",
+                message = stringResource(R.string.please_note_that_only_google_sign_in_is_currently_supported),
             )
 
             EmailAndPasswordSignInSection(
