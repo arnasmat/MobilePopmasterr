@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mobilepopmasterr.data.DataStoreManager
 import com.example.mobilepopmasterr.data.GameStatistics
-import com.google.maps.android.compose.MapType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -40,6 +39,9 @@ class ProfileViewModel(
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
+                _profileState.value = _profileState.value.copy(
+                    statistics = GameStatistics()
+                )
             }
         }
     }

@@ -37,8 +37,13 @@ class SettingsViewModel(
 
     fun updateMapType(mapType: MapType) {
         viewModelScope.launch {
-            dataStoreManager.setMapType(mapType)
-            _settingsState.value = _settingsState.value.copy(mapType = mapType)
+            try {
+                dataStoreManager.setMapType(mapType)
+                _settingsState.value = _settingsState.value.copy(mapType = mapType)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                loadSettings()
+            }
         }
     }
 }

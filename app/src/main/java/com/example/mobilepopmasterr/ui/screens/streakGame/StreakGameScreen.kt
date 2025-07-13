@@ -366,7 +366,7 @@ private fun StreakResultDisplay(
                     ) {
                         append(formatPopulationString(gameState.blueRectangle?.population.toString()))
                     }
-                    append(stringResource(R.string.red))
+                    append(stringResource(R.string.red_newline))
                     withStyle(
                         style = SpanStyle(
                             fontWeight = FontWeight.Bold,

@@ -49,6 +49,7 @@ class ClassicGameViewModel(
         viewModelScope.launch {
             try {
                 val (rectangle, population) = getRectangleAndPopulation()
+
                 if(population == null){
                     throw IllegalStateException("Failed to load rectangle or population")
                 }
@@ -71,10 +72,18 @@ class ClassicGameViewModel(
 
     private fun loadMapType() {
         viewModelScope.launch {
-            val mapType = dataStoreManager.getMapType()
-            _gameState.value = _gameState.value.copy(
-                mapType = mapType
-            )
+            try {
+                val mapType = dataStoreManager.getMapType()
+                _gameState.value = _gameState.value.copy(
+                    mapType = mapType
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // if loading fails -> use default type
+                _gameState.value = _gameState.value.copy(
+                    mapType = MapType.NORMAL
+                )
+            }
         }
     }
 
@@ -120,8 +129,9 @@ class ClassicGameViewModel(
     }
 
 // Handle storing the guess in the local data storage/DataStore
-    private fun handleDataStoreGuess(){
-        viewModelScope.launch {
+private fun handleDataStoreGuess() {
+    viewModelScope.launch {
+        try {
             val score = calculateScore()
             dataStoreManager.increaseTotalScore(score)
             dataStoreManager.increaseGamesPlayed()
@@ -129,8 +139,14 @@ class ClassicGameViewModel(
             if (score == 5000) {
                 dataStoreManager.increasePerfectGuesses()
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            _gameState.value = _gameState.value.copy(
+                errorMessage = "Failed to save game: ${e.message}"
+            )
         }
     }
+}
 
 
     fun playAgain() {

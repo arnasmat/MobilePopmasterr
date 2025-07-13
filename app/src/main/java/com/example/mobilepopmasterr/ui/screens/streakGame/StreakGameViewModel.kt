@@ -51,10 +51,17 @@ class StreakGameViewModel(
 
     private fun loadCurrentStreak() {
         viewModelScope.launch {
-            val currentStreak = dataStoreManager.getCurrentStreak()
-            _gameState.value = _gameState.value.copy(
-                currentStreak = currentStreak
-            )
+            try {
+                val currentStreak = dataStoreManager.getCurrentStreak()
+                _gameState.value = _gameState.value.copy(
+                    currentStreak = currentStreak
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _gameState.value = _gameState.value.copy(
+                    errorMessage = "Failed to load current streak: ${e.message}"
+                )
+            }
         }
     }
 
@@ -101,10 +108,18 @@ class StreakGameViewModel(
 
     private fun loadMapType() {
         viewModelScope.launch {
-            val mapType = dataStoreManager.getMapType()
-            _gameState.value = _gameState.value.copy(
-                mapType = mapType
-            )
+            try {
+                val mapType = dataStoreManager.getMapType()
+                _gameState.value = _gameState.value.copy(
+                    mapType = mapType
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // if loading fails -> use default type
+                _gameState.value = _gameState.value.copy(
+                    mapType = MapType.NORMAL
+                )
+            }
         }
     }
 
@@ -126,25 +141,28 @@ class StreakGameViewModel(
     // Note that this handles it more than just for the data store, also updates game state things
     private fun handleDataStoreGuess(isCorrect: Boolean, state: StreakGameState) {
         viewModelScope.launch {
-            if (isCorrect) {
-                dataStoreManager.increaseCurrentStreak()
-
-                val newStreak = state.currentStreak + 1
-
-                _gameState.value = state.copy(
-                    currentStreak = newStreak,
-                    guessCorrect = true,
-                    showResult = true,
-                    isWaitingForNextRound = true
-                )
-
-            } else {
-                dataStoreManager.resetCurrentStreak()
-
-                _gameState.value = state.copy(
-                    gameEnded = true,
-                    guessCorrect = false,
-                    showResult = true
+            try {
+                if (isCorrect) {
+                    dataStoreManager.increaseCurrentStreak()
+                    val newStreak = state.currentStreak + 1
+                    _gameState.value = state.copy(
+                        currentStreak = newStreak,
+                        guessCorrect = true,
+                        showResult = true,
+                        isWaitingForNextRound = true
+                    )
+                } else {
+                    dataStoreManager.resetCurrentStreak()
+                    _gameState.value = state.copy(
+                        gameEnded = true,
+                        guessCorrect = false,
+                        showResult = true
+                    )
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _gameState.value = _gameState.value.copy(
+                    errorMessage = "Failed to handle storing game: ${e.message}"
                 )
             }
         }

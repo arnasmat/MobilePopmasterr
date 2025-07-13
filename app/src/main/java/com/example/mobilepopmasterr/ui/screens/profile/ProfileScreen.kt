@@ -26,7 +26,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -52,7 +51,6 @@ import com.example.mobilepopmasterr.R
 import com.example.mobilepopmasterr.data.DataStoreManager
 import com.example.mobilepopmasterr.data.GameStatistics
 import com.example.mobilepopmasterr.ui.screens.signIn.UserData
-import com.google.maps.android.compose.MapType
 
 /*
 *                                       PROFILE SCREEN
