@@ -40,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -47,6 +48,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mobilepopmasterr.R
 import com.example.mobilepopmasterr.data.DataStoreManager
 import com.example.mobilepopmasterr.ui.Rectangle
 import com.example.mobilepopmasterr.ui.components.BackToGameSelectionButton
@@ -214,7 +216,7 @@ private fun PopulationGuessInputSection(
                 viewModel.updateUserGuess(newValue)
             }
         },
-        label = { Text("Guess the population!") },
+        label = { Text(stringResource(R.string.guess_the_population)) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
         ),
@@ -231,11 +233,11 @@ private fun PopulationGuessInputSection(
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Text("Submit")
+        Text(stringResource(R.string.submit))
     }
     if(gameState.rectangle != null) {
         Text(
-            text = "Can't find the rectangle? Click here!",
+            text = stringResource(R.string.can_t_find_the_rectangle_click_here),
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
@@ -265,7 +267,7 @@ private fun PopulationResultSection(
             .fillMaxWidth()
             .padding(0.dp, 8.dp)
     ) {
-        Text("Play Again")
+        Text(stringResource(R.string.play_again))
     }
 }
 
@@ -289,7 +291,7 @@ fun ResultDisplay(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Score: ${score ?: 0}",
+                text = stringResource(R.string.score, score ?: 0),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
                 color = when {
@@ -305,7 +307,7 @@ fun ResultDisplay(
 
             Text(
                 text = buildAnnotatedString {
-                    append("You guessed ")
+                    append(stringResource(R.string.you_guessed))
                     withStyle(
                         style = SpanStyle(
                             fontWeight = FontWeight.Bold,
@@ -314,7 +316,7 @@ fun ResultDisplay(
                     ) {
                         append(formatPopulationString(guessedPopulation.toString()))
                     }
-                    append(", the actual population is ")
+                    append(stringResource(R.string.the_actual_population_is))
                     withStyle(
                         style = SpanStyle(
                             fontWeight = FontWeight.Bold,

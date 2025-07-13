@@ -7,8 +7,11 @@ import androidx.compose.material.icons.filled.Games
 import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Timeline
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import com.example.mobilepopmasterr.R
 import com.example.mobilepopmasterr.ui.theme.LightPink
 
 data class StatisticItem(
@@ -27,35 +30,36 @@ data class GameStatistics(
     val highestStreak: Int = 0
 ) {
     // The icons currently are kinda random, may change!
+    @Composable
     fun toStatisticItems(): List<StatisticItem> = listOf(
         StatisticItem(
-            title = "Games Played",
+            title = stringResource(R.string.games_played),
             value = gamesPlayed.toString(),
             icon = Icons.Default.Games
         ),
         StatisticItem(
-            title = "Total Score",
+            title = stringResource(R.string.total_score),
             value = totalScore.toString(),
             icon = Icons.Default.Star
         ),
         StatisticItem(
-            title = "Average Score",
+            title = stringResource(R.string.average_score),
             value = averageScore.toString(),
             icon = Icons.AutoMirrored.Filled.TrendingUp
         ),
         StatisticItem(
-            title = "Perfect Guesses",
+            title = stringResource(R.string.perfect_guesses),
             value = perfectGuesses.toString(),
             icon = Icons.Default.EmojiEvents
         ),
         StatisticItem(
-            title = "Current Streak",
+            title = stringResource(R.string.current_streak),
             value = currentStreak.toString(),
             icon = Icons.Default.Timeline,
             color = LightPink.toArgb()
         ),
         StatisticItem(
-            title = "Best Streak",
+            title = stringResource(R.string.best_streak),
             value = highestStreak.toString(),
             icon = Icons.Default.Psychology,
             color = LightPink.toArgb()

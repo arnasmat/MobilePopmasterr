@@ -19,7 +19,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.mobilepopmasterr.R
 
 // General map components that work both for streak and classic
 
@@ -40,7 +42,7 @@ fun BackToGameSelectionButton(
     ) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = "Back",
+            contentDescription = stringResource(R.string.back),
             tint = Color.Black
         )
     }
@@ -59,6 +61,6 @@ fun LoadingIndicator() {
             modifier = Modifier.size(48.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Text("Loading rectangle...")
+        Text(stringResource(R.string.loading_rectangle))
     }
 }

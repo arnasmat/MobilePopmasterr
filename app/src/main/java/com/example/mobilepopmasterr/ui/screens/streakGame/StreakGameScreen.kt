@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -48,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mobilepopmasterr.R
 import com.example.mobilepopmasterr.data.DataStoreManager
 import com.example.mobilepopmasterr.ui.Rectangle
 import com.example.mobilepopmasterr.ui.components.BackToGameSelectionButton
@@ -188,7 +190,7 @@ private fun StreakGameChoiceSection(
 ) {
 
     Text(
-        text = "Which rectangle has a higher population?",
+        text = stringResource(R.string.which_rectangle_has_a_higher_population),
         style = MaterialTheme.typography.headlineSmall,
         textAlign = TextAlign.Center,
         modifier = Modifier
@@ -203,7 +205,7 @@ private fun StreakGameChoiceSection(
         GuessButton(
             viewModel = viewModel,
             onClick = { viewModel.submitGuess(RectangleColor.BLUE) },
-            colorText = "Blue",
+            colorText = stringResource(R.string.blue),
             containerColor = Color(0xFF3db0cc),
             modifier = Modifier.weight(1f)
         )
@@ -211,21 +213,21 @@ private fun StreakGameChoiceSection(
         GuessButton(
             viewModel = viewModel,
             onClick = { viewModel.submitGuess(RectangleColor.RED) },
-            colorText = "Red",
+            colorText = stringResource(R.string.red),
             containerColor = Color(0xFFFF6B35),
             modifier = Modifier.weight(1f)
         )
     }
     if(gameState.redRectangle != null && gameState.blueRectangle != null) {
         CantFindRectangleClickableText(
-            colorString = "Blue",
+            colorString = stringResource(R.string.blue),
             color = Color(0xFF3db0cc),
             rectangle = gameState.blueRectangle.rectangle,
             cameraPositionState = cameraPositionState,
         )
 
         CantFindRectangleClickableText(
-            colorString = "Red",
+            colorString = stringResource(R.string.red),
             color = Color(0xFFFF6B35),
             rectangle = gameState.redRectangle.rectangle,
             cameraPositionState = cameraPositionState,
@@ -243,7 +245,7 @@ private fun CantFindRectangleClickableText(
     val coroutineScope = rememberCoroutineScope()
 
     Text(
-        text = "Can't find the $colorString rectangle? Click here!",
+        text = stringResource(R.string.can_t_find_the_color_rectangle_click_here, colorString),
         color = color,
         style = MaterialTheme.typography.bodyMedium,
         modifier = Modifier
@@ -302,7 +304,7 @@ private fun StreakGameResultSection(
                 .fillMaxWidth()
                 .padding(0.dp, 8.dp)
         ) {
-            Text("Start New Game")
+            Text(stringResource(R.string.start_new_game))
         }
     } else {
         Button(
@@ -311,7 +313,7 @@ private fun StreakGameResultSection(
                 .fillMaxWidth()
                 .padding(0.dp, 8.dp)
         ) {
-            Text("Next Round")
+            Text(stringResource(R.string.next_round))
         }
     }
 }
@@ -335,7 +337,7 @@ private fun StreakResultDisplay(
         ) {
             if (gameState.guessCorrect == true) {
                 Text(
-                    text = "Correct! 🎉",
+                    text = stringResource(R.string.correct),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF4CAF50),
@@ -343,7 +345,7 @@ private fun StreakResultDisplay(
                 )
             } else {
                 Text(
-                    text = "Wrong! :(",
+                    text = stringResource(R.string.wrong),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFFE91E63),
@@ -355,7 +357,7 @@ private fun StreakResultDisplay(
 
             Text(
                 text = buildAnnotatedString {
-                    append("Blue: ")
+                    append(stringResource(R.string.blue))
                     withStyle(
                         style = SpanStyle(
                             fontWeight = FontWeight.Bold,
@@ -364,7 +366,7 @@ private fun StreakResultDisplay(
                     ) {
                         append(formatPopulationString(gameState.blueRectangle?.population.toString()))
                     }
-                    append("\nRed: ")
+                    append(stringResource(R.string.red))
                     withStyle(
                         style = SpanStyle(
                             fontWeight = FontWeight.Bold,
@@ -381,7 +383,7 @@ private fun StreakResultDisplay(
             if (gameState.gameEnded) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Final Streak: ${gameState.currentStreak}",
+                    text = stringResource(R.string.final_streak, gameState.currentStreak),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center
@@ -410,7 +412,7 @@ private fun StreakCounter(
         ) {
             Icon(
                 imageVector = Icons.Default.Timeline,
-                contentDescription = "Streak",
+                contentDescription = stringResource(R.string.streak),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(20.dp)
             )

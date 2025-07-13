@@ -35,10 +35,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.mobilepopmasterr.R
 import com.example.mobilepopmasterr.data.DataStoreManager
 import com.example.mobilepopmasterr.ui.screens.signIn.UserData
 
@@ -116,9 +118,9 @@ private fun WelcomeSection(
             Text(
                 // (For when I add anonymous sign in)
                 text = if (userData?.username != null) {
-                    "Welcome back to Popmasterr, ${userData.username}!"
+                    stringResource(R.string.welcome_back_to_popmasterr, userData.username)
                 } else {
-                    "Welcome to Popmasterr!"
+                    stringResource(R.string.welcome_to_popmasterr)
                 },
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
@@ -129,7 +131,7 @@ private fun WelcomeSection(
             if (userData?.username != null) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Tap to view your profile",
+                    text = stringResource(R.string.tap_to_view_your_profile),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                     textAlign = TextAlign.Center,
@@ -151,7 +153,7 @@ private fun GameModeSelectionSection(
 ) {
     Column {
         Text(
-            text = "Choose Your Game Mode",
+            text = stringResource(R.string.choose_your_game_mode),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -161,10 +163,10 @@ private fun GameModeSelectionSection(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             GameModeCard(
-                title = "Classic Mode",
-                description = "Guess the population within a given rectangle!",
+                title = stringResource(R.string.classic_mode),
+                description = stringResource(R.string.guess_the_population_within_a_given_rectangle),
                 icon = Icons.Default.EmojiEvents,
-                statLabel = "Total Score: ",
+                statLabel = stringResource(R.string.total_score_homescreen),
                 statValue = totalScore.toString(),
                 backgroundColor = MaterialTheme.colorScheme.secondaryContainer,
                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -172,10 +174,10 @@ private fun GameModeSelectionSection(
             )
 
             GameModeCard(
-                title = "Streak Mode",
-                description = "Guess which rectangle has a higher population!",
+                title = stringResource(R.string.streak_mode),
+                description = stringResource(R.string.guess_which_rectangle_has_a_higher_population),
                 icon = Icons.AutoMirrored.Filled.TrendingUp,
-                statLabel = "Current Streak: ",
+                statLabel = stringResource(R.string.current_streak_home),
                 statValue = currentStreak.toString(),
                 backgroundColor = MaterialTheme.colorScheme.tertiaryContainer,
                 contentColor = MaterialTheme.colorScheme.onTertiaryContainer,

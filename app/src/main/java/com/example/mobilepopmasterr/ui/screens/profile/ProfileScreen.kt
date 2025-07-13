@@ -39,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -47,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil3.compose.AsyncImage
+import com.example.mobilepopmasterr.R
 import com.example.mobilepopmasterr.data.DataStoreManager
 import com.example.mobilepopmasterr.data.GameStatistics
 import com.example.mobilepopmasterr.ui.screens.signIn.UserData
@@ -97,7 +99,7 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Text(
-                        text = userData?.username ?: "Unknown User",
+                        text = userData?.username ?: stringResource(R.string.unknown_user),
                         style = MaterialTheme.typography.headlineMedium,
                         color = MaterialTheme.colorScheme.onSurface,
                         textAlign = TextAlign.Center,
@@ -147,7 +149,7 @@ private fun ProfilePicture(
         if (userData?.profilePictureUrl != null) {
             AsyncImage(
                 model = userData.profilePictureUrl,
-                contentDescription = "Profile Picture",
+                contentDescription = stringResource(R.string.profile_picture),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
                 onError = { error ->
@@ -166,7 +168,7 @@ private fun ProfilePicture(
             ) {
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
-                    contentDescription = "Default Profile Picture",
+                    contentDescription = stringResource(R.string.default_profile_picture),
                     modifier = Modifier.size(80.dp),
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
@@ -193,7 +195,7 @@ private fun UserStatistics(
                 .padding(20.dp)
         ) {
             Text(
-                text = "Statistics",
+                text = stringResource(R.string.statistics),
                 style = MaterialTheme.typography.headlineSmall.copy(
                     fontWeight = FontWeight.Bold
                 ),
@@ -303,7 +305,7 @@ private fun SignOutButton(
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = "Sign Out",
+            text = stringResource(R.string.sign_out),
             style = MaterialTheme.typography.labelLarge.copy(
                 fontWeight = FontWeight.Medium,
                 fontSize = 16.sp

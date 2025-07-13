@@ -82,6 +82,7 @@ class ClassicGameViewModel(
         //theoretically the button shouldn't be clickable if these are equal to null, but just in case ig
         if (_gameState.value.rectangle == null || _gameState.value.actualPopulation == null) {
             _gameState.value = _gameState.value.copy(
+                // not sure how to replace these values w/ string resources instead of hardcoded :(
                 errorMessage = "Map isn't loaded. How did you even click the button?"
             )
             return

@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
                                         googleAuthUIClient.signOut()
                                         Toast.makeText(
                                             applicationContext,
-                                            "Signed out successfully",
+                                            getString(R.string.signed_out_successfully),
                                             Toast.LENGTH_LONG
                                         ).show()
 

@@ -59,6 +59,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mobilepopmasterr.R
+import com.example.mobilepopmasterr.ui.components.MediumWarning
 
 /*
 *               SIGN IN SCREEN
@@ -98,6 +99,10 @@ fun SignInScreen(
     ) {
         item {
             SignInHeader()
+
+            MediumWarning(
+                message = "Please note that only Google sign-in is currently supported.",
+            )
 
             EmailAndPasswordSignInSection(
                 email = email,
